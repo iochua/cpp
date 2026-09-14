@@ -67,3 +67,26 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# Archivos ejecutables compilados
+*.exe
+*.out
+*.o
+*.obj
+*.app
+
+# Archivos de depuración y enlaces
+*.pdb
+*.ilk
+*.idb
+
+# Configuración local de editores e IDEs
+.vscode/
+.vs/
+*.vcxproj.user
+
+# Carpetas de salida de compilación
+bin/
+build/
+Debug/
+Release/
