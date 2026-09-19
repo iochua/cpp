@@ -40,9 +40,9 @@ int main() {
     }
 
     texto.asignar(0, "Hola");
-    texto.asignar(1, "Mundo");
-    texto.asignar(2, "desde");
-    texto.asignar(3, "un");
+    texto.asignar(1, "Ana");
+    texto.asignar(2, "Joshua");
+    texto.asignar(3, "Max");
     texto.asignar(4, "arreglo");
 
     cout << "Enteros: ";
