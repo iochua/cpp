@@ -32,13 +32,24 @@ class lista{
             inicio = NULL;
         }
 
-        void agregar(int valor){
+        void insertarFinal(int valor){
             nodo* nuevo = new nodo(valor); //metodo: new, crea espacio en la memoria de la computadora
             
-            nuevo->setSiguiente(inicio); //este operador es para extraer los metodos de un puntero
-
-            inicio = nuevo;
+            //nuevo->setSiguiente(inicio); //este operador es para extraer los metodos de un puntero
+            //inicio = nuevo;
+            if (inicio == NULL){
+                inicio = nuevo;
+            } 
+            else{
+                nodo* actual = inicio;
+                while (actual->getSiguiente() != NULL){
+                    actual = actual->getSiguiente();
+                }
+                actual->setSiguiente(nuevo);
+            }
         }
+
+
 
         void mostrar(){
             nodo* actual = inicio;
@@ -60,14 +71,27 @@ class lista{
 };
 
 int main(){
-    lista* miLista = new lista(); //crea un objeto de la clase lista
+    lista Lista;
+    int numero=0,op=0;
 
-    miLista->agregar(10);
-    miLista->agregar(20);
-    miLista->agregar(30);
-
-    miLista->mostrar();
-
-    delete miLista; //libera el espacio en la memoria de la computadora
+    do {
+        cout << "Selecciona una opcion: " << endl;
+        cout << "1. Insertar" << endl;
+        cout << "2. Mostrar" << endl;
+        cout << "3. Salir" << endl;
+        cin >> op;
+        switch(op) {
+            case 1:
+                cout << "dame numero: " << endl;
+                cin>>numero;
+                Lista.insertarFinal(numero);
+                system("cls");
+                break;  
+            case 2:
+            Lista.mostrar();
+            break;
+        }   
+    } while(op != 3);
+    
     return 0;
 }
