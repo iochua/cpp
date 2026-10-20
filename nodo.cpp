@@ -5,10 +5,12 @@ class nodo{
     private:
         int dato;
         nodo* siguiente;
+        nodo* anterior;
     public:
-        nodo(int valor){ //constructor de la clase
+        nodo(int valor){ 
             dato = valor;
             siguiente = NULL;
+            anterior = NULL; 
         }
 
     int getDato(){
@@ -22,20 +24,31 @@ class nodo{
     void setSiguiente(nodo* sig){
         siguiente = sig;
     }
+
+    nodo* getAnterior(){
+        return anterior;
+    }
+
+    void setAnterior(nodo* ant){
+        anterior = ant;
+    }
 };
 
 class lista{
     private:
         nodo* inicio;
     public:
-        lista(){ //constructor de la clase
+        lista(){ 
             inicio = NULL;
         }
 
         void insertarInicio(int valor){
-            nodo* nuevo = new nodo(valor); //metodo: new, crea espacio en la memoria de la computadora
+            nodo* nuevo = new nodo(valor); 
             
-            nuevo->setSiguiente(inicio); //este operador es para extraer los metodos de un puntero
+            nuevo->setSiguiente(inicio); 
+            if(inicio != NULL){
+                inicio->setAnterior(nuevo); 
+            }
             inicio = nuevo;
         }
 
@@ -50,63 +63,86 @@ class lista{
                     actual = actual->getSiguiente();
                 }
                 actual->setSiguiente(nuevo);
+                nuevo->setAnterior(actual); 
             }
         }
-
-
 
         void mostrarAdelante(){
             nodo* actual = inicio;
             while(actual != NULL){
-                cout << actual->getDato() << " -> ";
+                cout << actual->getDato() << " <-> ";
                 actual = actual->getSiguiente();
             }
             cout << "NULL" << endl;
         }
+
         void mostrarAtras(){
-
-        }
-        void eliminar(int valor){
-            if(inicio != NULL){
-                if(inicio->getDato() == valor){
-                    nodo* nodoAEliminar = inicio;
-                    inicio = inicio->getSiguiente(); // El inicio ahora es el segundo nodo
-                    delete nodoAEliminar; // Liberamos la memoria
-                    cout << "Nodo " << valor << " eliminado correctamente." << endl;
-                    return;
-                }
-
-                // Caso 3: El nodo a eliminar está en medio o al final
-                nodo* actual = inicio;
-                nodo* anterior = NULL;
-
-                // Recorremos la lista buscando el valor
-                while(actual != NULL && actual->getDato() != valor){
-                    anterior = actual; // Guardamos el rastro del nodo anterior
-                    actual = actual->getSiguiente();// Avanzamos al siguiente
-                }
-
-                // Si llegamos a NULL significa que no encontramos el número
-                if(actual == NULL){
-                    cout << "El numero " << valor << " no existe en la lista." << endl;
-                    return;
-                }
-
-                // Si lo encontramos, desconectamos el nodo actual y conectamos el anterior con el siguiente
-                anterior->setSiguiente(actual->getSiguiente());
-                delete actual; // Liberamos la memoria del nodo que sacamos
-                cout << "Nodo " << valor << " eliminado correctamente." << endl;
+            if (inicio == NULL){
+                cout << "NULL" << endl;
+                return;
             }
+
+            nodo* actual = inicio;
+            while (actual->getSiguiente() != NULL){
+                actual = actual->getSiguiente();
+            }
+
+            while(actual != NULL){
+                cout << actual->getDato() << " <-> ";
+                actual = actual->getAnterior();
+            }
+            cout << "NULL" << endl;
         }
 
-           
+        void eliminar(int valor){
+            //lista vacia
+            if (inicio == NULL){
+                cout << "La lista esta vacia." << endl;
+                return;
+            }
 
-    ~lista(){ //destructor de la clase
+            //si el nodo es el primero
+            if (inicio->getDato() == valor){
+                nodo* borrar = inicio;
+                inicio = inicio->getSiguiente();
+                if (inicio != NULL){
+                    inicio->setAnterior(NULL); 
+                }
+                delete borrar;
+                cout << "Nodo " << valor << " eliminado correctamente." << endl;
+                return;
+            }
+            
+            //si el nodo está en medio
+            nodo* actual = inicio;
+
+            while (actual != NULL && actual->getDato() != valor){
+                actual = actual->getSiguiente();
+            }
+
+            if (actual == NULL){
+                cout << "El numero " << valor << " no existe en la lista." << endl;
+                return;
+            }
+
+            //contectar los nodos anterior y siguiente
+            actual->getAnterior()->setSiguiente(actual->getSiguiente());
+            
+            //si el nodo no es el ultimo, no se contecta a un nulo siguiente
+            if (actual->getSiguiente() != NULL){
+                actual->getSiguiente()->setAnterior(actual->getAnterior());
+            }
+
+            delete actual;
+            cout << "Nodo " << valor << "eliminado correctamente" << endl;
+        }
+
+    ~lista(){ 
         nodo* actual = inicio;
 
         while(actual != NULL){
             nodo* siguiente = actual->getSiguiente();
-            delete actual; //libera el espacio en la memoria de la computadora
+            delete actual; 
             actual = siguiente;
         }
     }
@@ -114,37 +150,53 @@ class lista{
 
 int main(){
     lista Lista;
-    int numero=0,op=0;
+    int numero = 0, op = 0;
 
     do {
-        cout << "Selecciona una opcion: " << endl;
         cout << "1. Insertar al inicio" << endl;
         cout << "2. Insertar al final" << endl;
-        cout << "3. Mostrar al inicio" << endl;
-        cout << "4. Mostrar al final" << endl;
-        cout << "5. Salir" << endl;
+        cout << "3. Mostrar adelante" << endl;
+        cout << "4. Mostrar atras" << endl;
+        cout << "5. Eliminar" << endl;
+        cout << "6. Salir" << endl;
+        cout << "Elige una opcion: ";
         cin >> op;
+        
         switch(op) {
             case 1:
-                cout << "dame numero: " << endl;
-                cin>>numero;
+                cout << "Dame numero: ";
+                cin >> numero;
                 Lista.insertarInicio(numero);
                 system("cls");
                 break;  
             case 2:
-                cout << "dame numero: " << endl;
-                cin>>numero;
+                cout << "Dame numero: ";
+                cin >> numero;
                 Lista.insertarFinal(numero);
                 system("cls");
                 break;
             case 3:
+                system("cls");
+                cout << "Adelante: ";
                 Lista.mostrarAdelante();
                 break;
             case 4:
+                system("cls");
+                cout << "Atras: ";
                 Lista.mostrarAtras();
                 break;
+            case 5:
+                cout << "Dame numero a eliminar: ";
+                cin >> numero;
+                Lista.eliminar(numero);
+                break;
+            case 6:
+                cout << "Saliendo del programa" << endl;
+                break;
+            default:
+                cout << "Opcion no valida, elija una opcion valida" << endl;
         }   
-    } while(op != 5);
+    } while(op != 6);
     
     return 0;
 }
