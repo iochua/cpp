@@ -12,8 +12,8 @@ void mostrarLibros(stack<string> pilaCopia) {//copia la pila recibida como param
     
     cout << "Libros en la pila\n";
     while (!pilaCopia.empty()) {
-        cout << "- " << pilaCopia.top() << "\n";//extrae solo el ultimo libro de la pila
-        pilaCopia.pop(); //limpiar variable
+        cout << pilaCopia.top() << "\n";//extrae solo el ultimo libro de la pila
+        pilaCopia.pop(); //elimina el libro ya mostrado para seguir con el actual siguiente
     }
 }
 
