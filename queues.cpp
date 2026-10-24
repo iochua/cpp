@@ -15,10 +15,8 @@ class paquete{
         }
 };
 
-int main()
-{
-    queue<paquete> buffer;
-    int opc; 
+int menu() {
+    int opc;
     cout << "GESTION DE COLA DE PAQUETES\n";
     cout << "1. Agregar nuevo paquete a la cola\n";
     cout << "2. Procesar siguiente paquete de la cola\n";
@@ -26,8 +24,15 @@ int main()
     cout << "4. Salir\n";
     cout << "Seleccione una opcion: ";
     cin >> opc;
+    return opc;
+}
+int main()
+{
+    queue<paquete> buffer;
+    int opc;
 
     while (opc != 4) {
+        opc = menu();
         switch (opc) {
             case 1: {
                 int id; int tamano_kb;
@@ -41,13 +46,12 @@ int main()
 
                 if (buffer.size() >= 5) {
                     cout << "Buffer lleno. Paquete descartado (Packet Loss)\n";
-                    break;
                 } else{
                 paquete nuevoPaquete(id, ip_origen, tamano_kb);
                 buffer.push(nuevoPaquete);
                 cout << "Paquete agregado al buffer\n";
-                break;
                 }
+                break;
             }
             case 2:
                 if (!buffer.empty()) {
