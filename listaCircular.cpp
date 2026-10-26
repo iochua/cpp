@@ -47,7 +47,7 @@ public:
             nuevo->siguiente = inicio; 
             ultimo = nuevo;
         }
-        cout << "Jugador '" << n << "' ingresado correctamente.\n";
+        cout << "Jugador ingresado correctamente\n";
     }
 
     void mostrarJugadores() {
@@ -56,12 +56,12 @@ public:
             return;
         }
         Nodo* actual = inicio;
-        cout << "\n--- Jugadores --- \n";
+        cout << "\nJugadores\n";
         do {
             cout << actual->nombre << " -> ";
             actual = actual->siguiente;
         } while (actual != inicio);
-        cout << "(vuelve a " << inicio->nombre << ")\n";
+        cout << "vuelve a " << inicio->nombre << "\n";
     }
 
     void iniciarJuego(int saltos) {
@@ -77,7 +77,7 @@ public:
         Nodo* actual = inicio;
         Nodo* anterior = ultimo;
 
-        cout << "\n--- Iniciando Juego ---\n";
+        cout << "\nIniciando Juego\n";
         
         while (actual->siguiente != actual) {
             for (int i = 1; i < saltos; i++) {
@@ -105,20 +105,20 @@ public:
         ultimo = actual;
         inicio->siguiente = inicio;
 
-        cout << "\n🎉 EL GRAN GANADOR ES: " << inicio->nombre << " 🎉\n";
+        cout << "\nEl ganador es: " << inicio->nombre << "\n";
     }
 };
 
 int menu() {
     int opcion;
-    cout << "\n=== JUEGO DE ELIMINACION ===\n";
+    cout << "\nJUEGO DE ELIMINACION\n";
     cout << "1. Ingresar jugadores\n";
     cout << "2. Mostrar jugadores\n";
     cout << "3. Iniciar juego\n";
     cout << "4. Salir\n";
     cout << "Seleccione una opcion: ";
     cin >> opcion;
-    return opcion; 
+    return opcion;
 }
 
 int main() {
@@ -140,19 +140,19 @@ int main() {
                 juego.mostrarJugadores();
                 break;
             case 3:
-                cout << "Ingrese de a cuantos va a eliminar (ej. 3 para eliminar cada tercer jugador): ";
+                cout << "Ingrese de a cuantos va a eliminar: ";
                 cin >> saltos;
                 if (saltos > 0) {
                     juego.iniciarJuego(saltos);
                 } else {
-                    cout << "El numero debe ser mayor a 0.\n";
+                    cout << "El numero no puede ser 0\n";
                 }
                 break;
             case 4:
-                cout << "Saliendo del programa...\n";
+                cout << "adeu\n";
                 break;
             default:
-                cout << "Opcion no valida.\n";
+                cout << "Opcion no valida\n";
                 break;
         }
     }
